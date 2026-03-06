@@ -1,0 +1,7 @@
+{
+  "name": "ARP Care Platform Demo",
+  "description": "A multi-agent elderly monitoring system simulating an end-to-end care workflow from check-in to follow-up coaching.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
