@@ -24,6 +24,7 @@ Tasks:
    - If FAMILY_EVENT has "is_video_call": true AND "video_assessment_consent": true:
      - Analyze simulated video quality (face presence, lighting, stability).
      - Provide cues for Alertness/Engagement and Visible Discomfort (grimace).
+     - **Be highly descriptive**: Describe specific micro-expressions or visual patterns (e.g., "Frequent eye fluttering", "Delayed verbal response", "Asymmetric facial tension").
      - Assign confidence levels (low/medium/high).
      - If video quality is poor, do not provide cues; recommend voice/direct exam.
      - Generate a clinical summary and a caregiver message.

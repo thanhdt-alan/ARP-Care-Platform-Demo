@@ -41,6 +41,58 @@ const FacialCuesView: React.FC<FacialCuesViewProps> = ({ analysis }) => {
 
   return (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+      {/* Simulated Video Feed Section */}
+      <div className="relative aspect-video bg-slate-950 rounded-2xl overflow-hidden border border-slate-800 shadow-2xl group">
+        {/* Placeholder for Video */}
+        <img 
+          src="https://images.unsplash.com/photo-1581056344415-3abb473d38c1?auto=format&fit=crop&q=80&w=1000" 
+          className="w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 transition-all duration-700"
+          alt="Video Feed"
+          referrerPolicy="no-referrer"
+        />
+        
+        {/* Scanning Line Animation */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="w-full h-1 bg-indigo-500/50 shadow-[0_0_15px_rgba(99,102,241,0.5)] absolute top-0 animate-scan" />
+        </div>
+
+        {/* AI Bounding Boxes (Simulated) */}
+        {video_quality.face_present && (
+          <>
+            {/* Face Box */}
+            <div className="absolute top-1/4 left-1/3 w-1/3 h-1/2 border-2 border-indigo-500/40 rounded-lg shadow-[0_0_10px_rgba(99,102,241,0.2)]">
+              <div className="absolute -top-6 left-0 bg-indigo-500 text-[8px] font-black px-1.5 py-0.5 rounded uppercase tracking-tighter text-white">
+                Patient_ID: P-ARP-001
+              </div>
+            </div>
+            
+            {/* Eyes Analysis */}
+            <div className="absolute top-[35%] left-[38%] w-8 h-4 border border-emerald-500/50 rounded-full" />
+            <div className="absolute top-[35%] left-[54%] w-8 h-4 border border-emerald-500/50 rounded-full" />
+            
+            {/* Mouth Analysis (Discomfort detection) */}
+            <div className={`absolute top-[60%] left-[44%] w-12 h-6 border rounded-full transition-colors ${cues.discomfort.detected ? 'border-rose-500/60 bg-rose-500/10' : 'border-emerald-500/50'}`} />
+          </>
+        )}
+
+        {/* Overlay Info */}
+        <div className="absolute top-4 left-4 flex flex-col gap-2">
+          <div className="flex items-center gap-2 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
+            <div className="w-2 h-2 bg-rose-500 rounded-full animate-pulse" />
+            <span className="text-[10px] font-black text-white uppercase tracking-widest">Live Analysis</span>
+          </div>
+          <div className="bg-black/40 backdrop-blur-sm px-2 py-1 rounded text-[8px] font-mono text-indigo-300 border border-indigo-500/20">
+            FPS: 24.2 | LATENCY: 42ms
+          </div>
+        </div>
+
+        {/* Corner Accents */}
+        <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-white/20 m-4" />
+        <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-white/20 m-4" />
+        <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-white/20 m-4" />
+        <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-white/20 m-4" />
+      </div>
+
       {/* Header & Video Quality */}
       <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
         <div className="bg-slate-900 p-4 flex items-center justify-between">

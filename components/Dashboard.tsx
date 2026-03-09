@@ -24,6 +24,16 @@ interface DashboardProps {
 
 const Dashboard: React.FC<DashboardProps> = ({ patient, onTriggerScenario, onInstantAnalysis, isProcessing, onReset }) => {
   const [scenarioInput, setScenarioInput] = useState('');
+  const [isVideoCallActive, setIsVideoCallActive] = useState(false);
+
+  const handlePresetClick = (preset: { label: string, text: string }) => {
+    setScenarioInput(preset.text);
+    if (preset.label === 'Video-Assisted Assessment') {
+      setIsVideoCallActive(true);
+    } else {
+      setIsVideoCallActive(false);
+    }
+  };
 
   const chartData = (patient.biometricHistory || []).map(record => ({
     time: new Date(record.timestamp).toLocaleDateString(),
@@ -393,13 +403,66 @@ const Dashboard: React.FC<DashboardProps> = ({ patient, onTriggerScenario, onIns
             {PRESETS.map((p, idx) => (
               <button
                 key={idx}
-                onClick={() => setScenarioInput(p.text)}
-                className="px-3 py-1.5 bg-indigo-800 hover:bg-indigo-700 text-[10px] font-black uppercase tracking-widest rounded-full transition-all border border-indigo-700 hover:scale-105"
+                onClick={() => handlePresetClick(p)}
+                className={`px-3 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-full transition-all border hover:scale-105 ${
+                  scenarioInput === p.text 
+                  ? 'bg-white text-indigo-900 border-white' 
+                  : 'bg-indigo-800 hover:bg-indigo-700 text-indigo-100 border-indigo-700'
+                }`}
               >
                 {p.label}
               </button>
             ))}
           </div>
+
+          {isVideoCallActive && !isProcessing && (
+            <div className="bg-indigo-950/80 border border-indigo-400/30 rounded-2xl p-6 animate-in zoom-in duration-300 relative overflow-hidden group">
+              <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-transparent pointer-events-none" />
+              <div className="flex items-center justify-between mb-6 relative z-10">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-rose-500 rounded-full flex items-center justify-center animate-pulse">
+                    <i className="fa-solid fa-video text-white"></i>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-white">Video Call Simulation</h4>
+                    <p className="text-[10px] text-indigo-300 uppercase tracking-widest font-black">Waiting for clinician connection...</p>
+                  </div>
+                </div>
+                <div className="flex gap-2">
+                   <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
+                   <span className="text-[10px] font-black text-emerald-400 uppercase">Secure Link Active</span>
+                </div>
+              </div>
+
+              <div className="aspect-video bg-slate-900 rounded-xl overflow-hidden border border-white/10 relative shadow-2xl">
+                <img 
+                  src="https://images.unsplash.com/photo-1581056344415-3abb473d38c1?auto=format&fit=crop&q=80&w=1000" 
+                  className="w-full h-full object-cover opacity-40 grayscale"
+                  alt="Patient Preview"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6">
+                  <i className="fa-solid fa-face-viewfinder text-5xl text-indigo-400/50 mb-4"></i>
+                  <p className="text-xs text-indigo-200 font-medium max-w-xs">
+                    AI-Assisted Visual Analysis will begin automatically once the session starts.
+                  </p>
+                </div>
+                <div className="absolute bottom-4 left-4 right-4 flex justify-between items-center">
+                  <div className="flex gap-2">
+                    <div className="w-8 h-8 bg-white/10 backdrop-blur-md rounded-lg flex items-center justify-center border border-white/10">
+                      <i className="fa-solid fa-microphone text-white text-xs"></i>
+                    </div>
+                    <div className="w-8 h-8 bg-white/10 backdrop-blur-md rounded-lg flex items-center justify-center border border-white/10">
+                      <i className="fa-solid fa-video text-white text-xs"></i>
+                    </div>
+                  </div>
+                  <div className="px-3 py-1 bg-rose-500 rounded-lg text-[10px] font-black uppercase tracking-widest text-white">
+                    End Call
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
 
           <button
             disabled={isProcessing || !scenarioInput.trim()}

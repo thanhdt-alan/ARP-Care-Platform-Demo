@@ -160,14 +160,23 @@ const renderAgentContent = (
                 <div className="flex bg-slate-100 p-1 rounded-lg">
                   <button 
                     onClick={() => setViewMode('report')}
-                    className={`px-3 py-1 text-[10px] font-black uppercase rounded-md transition-all ${viewMode !== 'facial_cues' ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-400 hover:text-slate-600'}`}
+                    className={`px-3 py-1 text-[10px] font-black uppercase rounded-md transition-all ${
+                      viewMode !== 'facial_cues' 
+                      ? 'bg-white text-indigo-600 shadow-sm' 
+                      : 'text-slate-400 hover:text-slate-600'
+                    }`}
                   >
                     Summary
                   </button>
                   <button 
                     onClick={() => setViewMode('facial_cues')}
-                    className={`px-3 py-1 text-[10px] font-black uppercase rounded-md transition-all ${viewMode === 'facial_cues' ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-400 hover:text-slate-600'}`}
+                    className={`px-3 py-1 text-[10px] font-black uppercase rounded-md transition-all flex items-center gap-2 ${
+                      viewMode === 'facial_cues' 
+                      ? 'bg-indigo-600 text-white shadow-md' 
+                      : 'bg-white text-indigo-600 shadow-sm hover:bg-indigo-50 animate-pulse'
+                    }`}
                   >
+                    <i className="fa-solid fa-wand-sparkles"></i>
                     Facial Cues
                   </button>
                 </div>
